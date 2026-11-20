@@ -1,0 +1,27 @@
+[
+  {
+    "epoch": 1,
+    "train_objective": 0.6465234178304672,
+    "seconds": 5.7608277797698975
+  },
+  {
+    "epoch": 2,
+    "train_objective": 0.35852028807004294,
+    "seconds": 5.3436079025268555
+  },
+  {
+    "epoch": 3,
+    "train_objective": 0.2838381310304006,
+    "seconds": 5.404587030410767
+  },
+  {
+    "epoch": 4,
+    "train_objective": 0.24157534887393314,
+    "seconds": 5.5732831954956055
+  },
+  {
+    "epoch": 5,
+    "train_objective": 0.23190326700607936,
+    "seconds": 5.372683048248291
+  }
+]

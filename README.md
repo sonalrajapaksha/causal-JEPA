@@ -40,3 +40,19 @@ The generated dataset has 2,400 train, 300 validation, and 300 test sequences (4
 ## Controlled experiment audit
 
 The original `scripts/train.py` objective has no variance or covariance safeguard and can collapse. For the controlled pilots use `scripts/controlled_experiment.py`; it records seed, settings, validation history, MPS driver allocation, and validation-selected checkpoints under `outputs/experiments/`. It adds variance and covariance penalties to the latent prediction loss. The `b_info` ablation and `c` are intentionally identical architectures and objectives: both condition on intervention labels. They cannot establish an added causal objective. `scripts/audit_experiment.py` checks split identity, shapes, target stop-gradient, and EMA updates. `scripts/evaluate_controlled.py` computes frozen ridge probes and diagnostics; its `--split` option distinguishes validation from held-out test results.
+
+## Representation-collapse follow-up
+
+`scripts/collapse_experiment.py` compares the original controlled Model B objective (B1), normalized variance/covariance regularization (B2), and a simulator-state supervised reference (B3). It uses the existing splits and writes only to `outputs/experiment2/`. The B3 head and state-transition/position-oracle baselines use labels and are not self-supervised. The detailed methods and results are in `outputs/experiment2/methods.md` and `outputs/research_summary.md`. To reproduce in a fresh output directory:
+
+```sh
+for variant in b1 b2 b3; do
+  for seed in 42 43 44; do
+    .venv/bin/python scripts/collapse_experiment.py train --variant "$variant" --seed "$seed"
+  done
+done
+.venv/bin/python scripts/collapse_experiment.py baseline
+.venv/bin/python scripts/collapse_experiment.py evaluate
+.venv/bin/python scripts/audit_collapse_slots.py
+.venv/bin/python scripts/plot_collapse_experiment.py
+```

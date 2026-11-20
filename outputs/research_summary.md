@@ -41,3 +41,36 @@ From the repository root, see `scripts/controlled_experiment.py`, `scripts/audit
 for m in a b b_info c; do .venv/bin/python scripts/controlled_experiment.py --model "$m" --name "replicate_$m" --epochs 5 --patience 10; done
 .venv/bin/python scripts/evaluate_controlled.py --names replicate_a replicate_b replicate_b_info replicate_c --group replicate --split test
 ```
+
+
+# Experiment 2: does anti-collapse help physical representations?
+
+Nine full-split runs completed: B1, B2 and the **supervised reference** B3, each at seeds 42, 43 and 44, five epochs. The existing splits and data were reused. The final epoch was specified in advance. See `outputs/experiment2/methods.md` for objectives, training, probe and baseline definitions. B2's normalized variance floor and covariance penalty were fixed before testing; B3 adds a four-output ball-state head to B1 and uses simulator labels. It is not self-supervised.
+
+The held-out results do **not** support improved physical understanding from B2. Its effective rank is somewhat higher, but raw embedding variance collapses to 0.0032–0.0045 mean standard deviation, and position and velocity probes remain poor. Normalizing the regularized vectors leaves their overall magnitude free to shrink; the raw JEPA MSE may reward this. B3 also failed to learn useful state features under these settings. This failure of the supervised reference limits any attribution of weak JEPA probes to collapse alone: architecture, optimization, loss weighting and framewise input are plausible limitations. No causal claim follows.
+
+Frozen probe R² below is for ball x, y, vx, vy, fitted on training representations and evaluated on all four test frames. Ratios are latent prediction MSE divided by that model's own target-space persistence MSE, separately for each transition subset; below 1 beats persistence. Prediction MSE values from different models have different scales and are not directly comparable.
+
+| Run | Mean std | Effective rank / 32 | Probe R² x, y, vx, vy | Pred / persistence: all | Intervention | No intervention |
+|---|---:|---:|---|---:|---:|---:|
+| b1_seed42 | 0.0902 | 2.38 | 0.005, 0.110, -0.000, -0.008 | 1.65 | 1.45 | 1.86 |
+| b1_seed43 | 0.0970 | 2.07 | -0.000, 0.031, -0.000, -0.009 | 0.54 | 0.54 | 0.53 |
+| b1_seed44 | 0.1022 | 2.99 | 0.001, 0.032, 0.001, -0.007 | 1.00 | 0.96 | 1.05 |
+| b2_seed42 | 0.0033 | 2.98 | -0.001, 0.016, 0.001, -0.007 | 3.01 | 2.85 | 3.20 |
+| b2_seed43 | 0.0045 | 3.05 | -0.001, 0.020, -0.001, -0.008 | 1.35 | 1.42 | 1.28 |
+| b2_seed44 | 0.0032 | 3.80 | 0.000, 0.019, 0.001, -0.008 | 0.96 | 1.05 | 0.87 |
+| b3_seed42 | 0.0854 | 1.04 | -0.001, 0.016, 0.000, -0.009 | 0.59 | 0.62 | 0.57 |
+| b3_seed43 | 0.0961 | 1.01 | 0.001, 0.021, -0.000, -0.007 | 0.61 | 0.68 | 0.53 |
+| b3_seed44 | 0.0872 | 1.03 | 0.000, 0.024, 0.000, -0.008 | 0.61 | 0.71 | 0.51 |
+
+There are 454 intervention and 446 non-intervention test transitions. Individual within-model prediction and persistence MSE, subset next-frame probe R²/RMSE, and all seeds are in `outputs/experiment2/metrics.json`. This is a descriptive three-seed comparison, not an uncertainty interval. Unlike the original validation-selected B1 checkpoint, this comparison fixes the final epoch; B1 seed 42 does not beat persistence here.
+
+## Temporal information and baselines
+
+The first four frames contain motion information, but neither the framewise encoder nor its per-frame probes use it. The train-fitted, held-out linear baseline on 8×8 RGB pixels from a single frame obtains position R² (x,y) (0.952, 0.979) and velocity R² (−0.017, −0.015). Adding the preceding-frame difference obtains velocity R² (0.205, 0.129) overall, (0.122, 0.034) for intervention transitions and (0.274, 0.206) for non-intervention transitions. It demonstrates some recoverable velocity information, not that the window determines exact velocity. A supervised oracle using two simulator positions obtains velocity R² (0.162, 0.098) overall, (0.002, −0.022) intervention and (0.296, 0.195) non-intervention; resets, collisions and unobserved within-step dynamics limit inference from displacement. A train-fitted supervised current-state-to-next-state linear reference obtains next velocity R² (0.327, 0.317) overall, (0.326, 0.286) intervention and (0.327, 0.341) non-intervention. Its inputs are ground-truth simulator states, not pixels. All baseline metrics including state persistence and RMSE are in `outputs/experiment2/baselines.json`.
+
+## Alignment and limitations
+
+The generator saves the state and image from the same simulator step, then records the intervention used to advance to the next frame. Sampled replay checks passed for each split. Ball labels are aligned by state-key name, and the B3 head and probes pool slots instead of assuming a ball slot. Same-index training is still an unverified object-identity assumption: learned queries do not provide ground-truth object correspondence. On validation seed 42, same-index assignment was optimal for all 900 target-to-target comparisons for each variant, but B2 slots are nearly identical (mean pairwise slot MSE about 7.2e−11), making assignments uninformative. For prediction-to-target assignment B2 matched the same indices only 16.8% of the time, with essentially indistinguishable assignment costs; B1 and B3 were 100% and 99.8%. These diagnostics do not prove object tracking. See `outputs/experiment2/slot_audit_validation.json`.
+
+Short training, a single fixed regularization choice, only three seeds, no multi-frame encoder, no object masks or verified identities, and the failed supervised reference prevent a general conclusion that anti-collapse cannot help. The high position score of the simple pixel probe makes the encoder's failure especially clear. Effective rank alone is not evidence of physical understanding; even a stronger rank can coexist with shrinking scale and poor state probes. Results and new figures are isolated in `outputs/experiment2/`; experiment-one artifacts are retained.
