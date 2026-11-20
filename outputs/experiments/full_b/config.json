@@ -1,0 +1,21 @@
+{
+  "model": "b",
+  "name": "full_b",
+  "epochs": 5,
+  "patience": 10,
+  "batch": 8,
+  "train_limit": null,
+  "val_limit": null,
+  "seed": 42,
+  "device": "auto",
+  "architecture_variant": "b",
+  "variance_floor": 0.1,
+  "variance_weight": 10.0,
+  "covariance_weight": 100.0,
+  "momentum": 0.99,
+  "frames": 4,
+  "learning_rate": 0.0003,
+  "device_used": "mps",
+  "train_examples": 2400,
+  "validation_examples": 300
+}

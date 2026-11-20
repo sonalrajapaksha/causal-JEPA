@@ -1,0 +1,138 @@
+{
+  "full_a": {
+    "mean_embedding_std": 0.10864987969398499,
+    "effective_covariance_rank": 4.7638562909606215,
+    "collapse_flag_std_below_0_01": false,
+    "low_rank_flag_below_2": false,
+    "prediction_mse": 0.016100004315376282,
+    "prediction_mse_bootstrap_95ci": [
+      0.015492245275527238,
+      0.016667585400864483
+    ],
+    "persistence_mse": 0.014891992323100567,
+    "intervention_mse": 0.019451646134257317,
+    "nonintervention_mse": 0.012688244692981243,
+    "intervention_count": 454,
+    "nonintervention_count": 446,
+    "probe": {
+      "rmse": [
+        7.436243888276521,
+        6.552390204001818,
+        1.5627485288814649,
+        1.4899934755115753
+      ],
+      "r2": [
+        0.02502202169299217,
+        0.07843989454187561,
+        -0.0011946882174107554,
+        -0.010707036086467836
+      ]
+    },
+    "checkpoint_epoch": 5,
+    "seed": 42,
+    "training_examples": 2400,
+    "potential_dimensional_collapse": true
+  },
+  "full_b": {
+    "mean_embedding_std": 0.0995912104845047,
+    "effective_covariance_rank": 2.5293861277136447,
+    "collapse_flag_std_below_0_01": false,
+    "low_rank_flag_below_2": false,
+    "prediction_mse": 0.011405070312321186,
+    "prediction_mse_bootstrap_95ci": [
+      0.010900312638841569,
+      0.011937958584167064
+    ],
+    "persistence_mse": 0.016676710918545723,
+    "intervention_mse": 0.011914090253412724,
+    "nonintervention_mse": 0.010886916890740395,
+    "intervention_count": 454,
+    "nonintervention_count": 446,
+    "probe": {
+      "rmse": [
+        7.431580911630488,
+        6.6614798256748635,
+        1.5610234395823108,
+        1.4875238526772745
+      ],
+      "r2": [
+        0.026244379164998555,
+        0.047498660740966314,
+        0.0010144925003450211,
+        -0.0073593749903362315
+      ]
+    },
+    "checkpoint_epoch": 5,
+    "seed": 42,
+    "training_examples": 2400,
+    "potential_dimensional_collapse": true
+  },
+  "full_b_info": {
+    "mean_embedding_std": 0.10137369483709335,
+    "effective_covariance_rank": 2.1729641506709565,
+    "collapse_flag_std_below_0_01": false,
+    "low_rank_flag_below_2": false,
+    "prediction_mse": 0.008398723788559437,
+    "prediction_mse_bootstrap_95ci": [
+      0.008055962435901166,
+      0.008762194798327983
+    ],
+    "persistence_mse": 0.01635010540485382,
+    "intervention_mse": 0.008552840910851955,
+    "nonintervention_mse": 0.00824184250086546,
+    "intervention_count": 454,
+    "nonintervention_count": 446,
+    "probe": {
+      "rmse": [
+        7.350192272857738,
+        6.650365217286187,
+        1.561415670055926,
+        1.4875313320222003
+      ],
+      "r2": [
+        0.04745619635061993,
+        0.05067448586429568,
+        0.0005124093468209523,
+        -0.007369505123251852
+      ]
+    },
+    "checkpoint_epoch": 4,
+    "seed": 42,
+    "training_examples": 2400,
+    "potential_dimensional_collapse": true
+  },
+  "full_c": {
+    "mean_embedding_std": 0.10137369483709335,
+    "effective_covariance_rank": 2.1729641506709565,
+    "collapse_flag_std_below_0_01": false,
+    "low_rank_flag_below_2": false,
+    "prediction_mse": 0.008398723788559437,
+    "prediction_mse_bootstrap_95ci": [
+      0.008055962435901166,
+      0.008762194798327983
+    ],
+    "persistence_mse": 0.01635010540485382,
+    "intervention_mse": 0.008552840910851955,
+    "nonintervention_mse": 0.00824184250086546,
+    "intervention_count": 454,
+    "nonintervention_count": 446,
+    "probe": {
+      "rmse": [
+        7.350192272857738,
+        6.650365217286187,
+        1.561415670055926,
+        1.4875313320222003
+      ],
+      "r2": [
+        0.04745619635061993,
+        0.05067448586429568,
+        0.0005124093468209523,
+        -0.007369505123251852
+      ]
+    },
+    "checkpoint_epoch": 4,
+    "seed": 42,
+    "training_examples": 2400,
+    "potential_dimensional_collapse": true
+  }
+}

@@ -1,0 +1,12 @@
+model: c
+data:
+  train: data/manifests/train.jsonl
+  val: data/manifests/val.jsonl
+  test: data/manifests/test.jsonl
+  context: 8
+  prediction: 8
+training:
+  epochs: 10
+  batch_size: 8
+  learning_rate: 0.0003
+  seed: 42

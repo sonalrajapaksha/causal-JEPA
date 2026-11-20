@@ -1,0 +1,3 @@
+[submodule "external/CITRIS"]
+	path = external/CITRIS
+	url = https://github.com/phlippe/CITRIS.git
