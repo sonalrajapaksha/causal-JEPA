@@ -1,0 +1,100 @@
+{
+  "models": {
+    "full_a": [
+      "jepa",
+      "a",
+      "outputs/experiments/full_a/best.pt"
+    ],
+    "full_b": [
+      "jepa",
+      "b",
+      "outputs/experiments/full_b/best.pt"
+    ],
+    "full_c": [
+      "jepa",
+      "c",
+      "outputs/experiments/full_c/best.pt"
+    ],
+    "b1": [
+      "jepa",
+      "b",
+      "outputs/experiment2/b1_seed42/final.pt"
+    ],
+    "b2": [
+      "jepa",
+      "b",
+      "outputs/experiment2/b2_seed42/final.pt"
+    ],
+    "b3": [
+      "jepa",
+      "b",
+      "outputs/experiment2/b3_seed42/final.pt"
+    ],
+    "t0": [
+      "temporal",
+      "t0",
+      "outputs/experiment3/t0_seed42/best.pt"
+    ],
+    "t1": [
+      "temporal",
+      "t1",
+      "outputs/experiment3/t1_seed42/best.pt"
+    ],
+    "t2": [
+      "temporal",
+      "t2",
+      "outputs/experiment3/t2_seed42/best.pt"
+    ]
+  },
+  "probe_seeds": [
+    11,
+    22,
+    33
+  ],
+  "encoder_seed": 42,
+  "target_timestep": 3,
+  "context_frames": {
+    "framewise": [
+      3
+    ],
+    "t0": [
+      3
+    ],
+    "t1": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "t2": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "intervention_transition": "2 to 3",
+  "ridge_alpha": 100,
+  "pixel_ridge_alpha": 1000,
+  "mlp_hidden": [
+    128,
+    64
+  ],
+  "activation": "GELU",
+  "optimizer": "AdamW",
+  "learning_rate": 0.001,
+  "weight_decay": 0.01,
+  "batch_size": 256,
+  "max_epochs": 100,
+  "patience": 15,
+  "min_delta": 0.0001,
+  "target_order": [
+    "ball_x",
+    "ball_y",
+    "ball_x_vel",
+    "ball_y_vel"
+  ],
+  "device": "mps",
+  "torch_version": "2.15.0",
+  "selection": "fixed checkpoint and hyperparameters; early stop on mean validation standardized target MSE"
+}
